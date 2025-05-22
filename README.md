@@ -84,7 +84,6 @@ Dataset diperiksa terhadap nilai yang hilang (null). Hasilnya:
 Kolom-kolom seperti `device_type`, `location`, `age_group`, `gender`, `content_type`, `ad_topic`, `ad_target_audience`, dan `engagement_level` diubah menggunakan teknik encoding:
 
 * **One-Hot Encoding**: Untuk fitur dengan jumlah kategori terbatas (misalnya gender, device\_type).
-* **Label Encoding** atau **Frequency Encoding**: Untuk fitur dengan banyak kategori (seperti ad\_id atau ad\_topic).
 
 ### 3.3. **Normalisasi / Standarisasi**
 
@@ -95,7 +94,7 @@ Fitur numerik seperti:
 * `view_time`
 * `cost_per_click`
 
-…di-normalisasi menggunakan **StandardScaler** atau **MinMaxScaler**, agar memiliki skala seragam dan mempercepat proses pelatihan model.
+dilakukan pemerikasaan outayer dan menemukan bahwa data calculated_ROI memiliki masalah karena banyaknya outlayer dan tidak seimbang sehingga harus diseimbangkan dulu
 
 ### 3.4. **Pembagian Data**
 
@@ -125,21 +124,19 @@ Tiga model digunakan dalam pendekatan ensemble learning:
 
 Digunakan pendekatan **Voting Classifier**:
 
-* **Hard Voting**: Label dipilih berdasarkan suara terbanyak dari model-model individu.
-* **Soft Voting**: Rata-rata probabilitas dari tiap model dipakai untuk prediksi akhir (lebih akurat jika model memberi probabilitas yang baik).
+saya melakukan pendekatan dengan membuat prediksi pada masing-masing model secara biner sehingga hasil dari list biner nya itu yang diterjemahkan menjadi output dari model secara keseluruhan.
 
 ```python
 from sklearn.ensemble import VotingClassifier
 
-ensemble = VotingClassifier(
-    estimators=[
-        ('rf1', rf_model1),
-        ('rf2', rf_model2),
-        ('lr', logistic_model)
-    ],
-    voting='soft'  # atau 'hard' jika tidak pakai probabilitas
-)
-ensemble.fit(X_train, y_train)
+y_pred_0 = base_model_low.predict(df_test.drop(columns=["Performance__medium", "Performance__low", 'Performance__high']))
+y_pred_1 = base_model_medium.predict(df_test.drop(columns=["Performance__medium", "Performance__low", 'Performance__high']))
+y_pred_2 = base_model_high.predict(df_test.drop(columns=["Performance__medium", "Performance__low", 'Performance__high']))
+
+y_pred = np.column_stack((y_pred_0, y_pred_1, y_pred_2))
+
+y_pred = [[int(val) for val in row] for row in y_pred]
+
 ```
 
 ---
@@ -157,19 +154,19 @@ Karena ini klasifikasi multi-kelas (Low, Medium, High), maka digunakan metrik be
 
 ### 5.2. **Hasil Sementara** *(Contoh hasil evaluasi)*
 
-| Model            | Accuracy | F1-Score (macro) | Keterangan        |
-| ---------------- | -------- | ---------------- | ----------------- |
-| Random Forest #1 | 0.88     | 0.87             | Model individual  |
-| Random Forest #2 | 0.87     | 0.86             | Model individual  |
-| Logistic Reg.    | 0.81     | 0.79             | Baseline model    |
-| **Ensemble**     | **0.89** | **0.88**         | Voting Classifier |
+| Model            | Accuracy | Keterangan        |
+| ---------------- | -------- | ----------------- |
+| Random Forest #1 | 1.00     | Model individual  |
+| Random Forest #2 | 0.99     | Model individual  |
+| Logistic Reg.    | 0.91     | Baseline model    |
+| **Ensemble**     | **0.97** | Hasil Essembel |
 
 ---
 
 ## ✅ 6. Kesimpulan Sementara
 
 * Dataset sudah **bersih dan seimbang**, sehingga cocok untuk klasifikasi multikelas.
-* **Random Forest** bekerja baik, dan ketika digabung dengan Logistic Regression melalui **Voting Classifier**, hasil meningkat.
-* **Ensemble Learning memberikan hasil terbaik**, dengan akurasi dan F1-score yang lebih tinggi daripada model individual.
+* **Random Forest** bekerja baik, dan ketika digabung dengan Logistic Regression menghasilakan prediksi yang baik
+* **Ensemble Learning memberikan hasil gabungan baik dengan megabungkan beberapa model dia atas**, 
 
 
