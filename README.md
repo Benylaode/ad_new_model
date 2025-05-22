@@ -100,18 +100,24 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 1. **Pemeriksaan Missing Values**:
 
    * Tidak ditemukan missing value yang signifikan.
+  
+2. **Deteksi Outlier**:
 
-2. **Encoding Fitur Kategorikal**:
+   * Fitur `calculated_roi` memiliki outlier yang signifikan dan ditangani dengan winsorization.
+     
+3. **Hapus data duplikat**:
+
+   * Melakukan penghapusan data duplikat dengan df.duplicated().sum().
+
+3. **Encoding Fitur Kategorikal**:
 
    * One-Hot Encoding digunakan pada `gender`, `device_type`, `content_type`, dll.
-
-3. **Deteksi Outlier**:
-
-   * Fitur `cost_per_click` memiliki outlier yang signifikan dan ditangani dengan winsorization.
 
 4. **Pembagian Data**:
 
    * Training: 80%, Testing: 20% menggunakan `train_test_split` dengan `stratify`.
+
+catatan : saya sedikit melakukan penyesuaian dengan colom timestem dan mengubahnya menjadi format datetiem yang seblumnya adalah string
 
 ---
 
