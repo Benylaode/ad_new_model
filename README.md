@@ -148,9 +148,7 @@ y_pred = [[int(val) for val in row] for row in y_pred]
 Karena ini klasifikasi multi-kelas (Low, Medium, High), maka digunakan metrik berikut:
 
 * **Accuracy**: Seberapa sering prediksi tepat.
-* **Precision, Recall, F1-Score (Macro & Weighted)**: Untuk menghindari bias kelas dominan.
 * **Confusion Matrix**: Untuk melihat distribusi kesalahan tiap kelas.
-* **ROC AUC Score (One-vs-Rest)**: Untuk klasifikasi multikelas berbasis probabilitas.
 
 ### 5.2. **Hasil Sementara** *(Contoh hasil evaluasi)*
 
