@@ -156,7 +156,7 @@ Karena ini klasifikasi multi-kelas (Low, Medium, High), maka digunakan metrik be
 | ---------------- | -------- | ----------------- |
 | Random Forest #1 | 1.00     | Model individual  |
 | Random Forest #2 | 0.99     | Model individual  |
-| Logistic Reg.    | 0.91     | Baseline model    |
+| Logistic Reg.    | 0.91     | Model individual     |
 | **Ensemble**     | **0.97** | Hasil Essembel |
 
 ---
