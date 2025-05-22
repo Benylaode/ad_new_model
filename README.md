@@ -89,6 +89,8 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 * Data target seimbang, sehingga tidak perlu penyesuaian distribusi kelas.
 * Visualisasi fitur numerik menunjukkan outlier pada `cost_per_click`.
 
+  data bisa dilihat pada link ini : https://www.kaggle.com/datasets/ziya07/advertising-campaign-dataset
+
 ---
 
 ### 🧹 4. Data Preparation
@@ -103,15 +105,11 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 
    * One-Hot Encoding digunakan pada `gender`, `device_type`, `content_type`, dll.
 
-3. **Normalisasi/Standarisasi**:
-
-   * Fitur numerik seperti `view_time`, `conversion_rate`, `click_through_rate` dinormalisasi.
-
-4. **Deteksi Outlier**:
+3. **Deteksi Outlier**:
 
    * Fitur `cost_per_click` memiliki outlier yang signifikan dan ditangani dengan winsorization.
 
-5. **Pembagian Data**:
+4. **Pembagian Data**:
 
    * Training: 80%, Testing: 20% menggunakan `train_test_split` dengan `stratify`.
 
