@@ -1,4 +1,4 @@
-## 📘 LAPORAN AWAL: Business Understanding & Data Understanding
+## 📘 LAPORAN 
 
 ### 🧩 1. Domain Proyek
 
