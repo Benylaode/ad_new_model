@@ -158,7 +158,7 @@ catatan : kedua model ini menghasilkan hasil prediksi yang memuaskan di percobaa
 | Random Forest #1 | 1.00     | Model individual |
 | Random Forest #2 | 0.99     | Model individual |
 | Logistic Reg.    | 0.91     | Model individual |
-| **Ensemble**     | **0.97** | Model terbaik    |
+| **Ensemble**     | **0.97** | Hasil Esemmbel    |
 
 **Penjelasan Metrik:**
 
