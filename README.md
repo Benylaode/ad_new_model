@@ -38,8 +38,7 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 **Solution Statements**
 
 1. Membangun model berbasis **ensemble learning** dengan kombinasi **Random Forest** dan **Logistic Regression** untuk meningkatkan akurasi klasifikasi performa iklan.
-2. Melakukan **hyperparameter tuning** pada Random Forest dan Logistic Regression guna menemukan konfigurasi model optimal.
-3. Menggunakan pendekatan **voting** berbasis hasil prediksi biner dari tiap model untuk menghasilkan keputusan akhir yang lebih andal.
+2. Menggunakan pendekatan berbasis hasil prediksi biner dari tiap model untuk menghasilkan keputusan akhir yang lebih andal.
 
 **Metrik Evaluasi:**
 
