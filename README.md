@@ -53,7 +53,6 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 
 * Jumlah entri: 1000 baris
 * Jumlah atribut: 16 kolom
-* Tautan data: *(simulasi dataset proyek internal, tidak tersedia publik)*
 
 **Penjelasan Fitur:**
 
@@ -85,9 +84,9 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 | Low    | 330    | 33.0%      |
 
 **Visualisasi & Analisis Awal:**
-
+saya sudah melakukan visualisasi di colab dan nampaknya data cukup baik di bagian kategorikal karena data seimbang baik numerik maupun kategorikal namun ada beberapa poin penting :
 * Data target seimbang, sehingga tidak perlu penyesuaian distribusi kelas.
-* Visualisasi fitur numerik menunjukkan outlier pada `cost_per_click`.
+* Visualisasi fitur numerik menunjukkan outlier pada `calculated ROI`.
 
   data bisa dilihat pada link ini : https://www.kaggle.com/datasets/ziya07/advertising-campaign-dataset
 
@@ -100,22 +99,27 @@ Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat me
 1. **Pemeriksaan Missing Values**:
 
    * Tidak ditemukan missing value yang signifikan.
+     dilakukan agar data tidak kehilangan fitur
   
 2. **Deteksi Outlier**:
 
    * Fitur `calculated_roi` memiliki outlier yang signifikan dan ditangani dengan winsorization.
+     dilakukan agar kita bisa menghidar data bias yang bisa menyebabkan kesalahn prediksi
      
 3. **Hapus data duplikat**:
 
    * Melakukan penghapusan data duplikat dengan df.duplicated().sum().
+     dialkukan agar data tidak bias dan condok kepada data yang banyak duplikatknya 
 
 3. **Encoding Fitur Kategorikal**:
 
    * One-Hot Encoding digunakan pada `gender`, `device_type`, `content_type`, dll.
+     dilakukan agar penyesuain dengan proses persiapan model
 
 4. **Pembagian Data**:
 
    * Training: 80%, Testing: 20% menggunakan `train_test_split` dengan `stratify`.
+     untuk menyesuaikan data agar siap ddigunakan 
 
 catatan : saya sedikit melakukan penyesuaian dengan colom timestem dan mengubahnya menjadi format datetiem yang seblumnya adalah string
 
@@ -136,11 +140,7 @@ catatan : saya sedikit melakukan penyesuaian dengan colom timestem dan mengubahn
    * Parameter: `C=1.0`, `solver='liblinear'`
    * Kelebihan: Interpretasi koefisien jelas
    * Kekurangan: Kurang efektif untuk relasi non-linear
-
-3. **Voting Classifier**
-
-   * Gabungan dari prediksi model biner untuk tiap kelas (Low, Medium, High)
-   * Digunakan teknik stacking sederhana berdasarkan hasil `predict` dari masing-masing model
+catatan : kedua model ini menghasilkan hasil prediksi yang memuaskan di percobaan pertama banhkan sampai 0.99 sehingga saya tidak melakukan hyper-parameter tuning namun saya pernah mencoba menggunakan Logistic Regression untuk melakukan klasifikasi pada model medium namun hasilnya kurang memuaskan sehingga saya menganti 2 model untuk low dan medium ke Random Forest Classifier, hal ini karena data tidak memiliki keunikan yang baik secara regresi sehingga saya menganti ke rendom forest yang lebih cocok untuk data biner
 
 ---
 
@@ -163,7 +163,16 @@ catatan : saya sedikit melakukan penyesuaian dengan colom timestem dan mengubahn
 **Penjelasan Metrik:**
 
 * **Accuracy** dihitung sebagai: $\text{Accuracy} = \frac{TP + TN}{Total}$
-* **Confusion Matrix** digunakan untuk mengidentifikasi di mana model salah klasifikasi
+* **Confusion Matrix** digunakan untuk mengidentifikasi di mana model salah klasifikasi, berikut sedikit penjelasannya
+Confusion Matrix menampilkan empat komponen utama:
+
+True Positive (TP): Prediksi benar (positif) sesuai dengan aktual.
+
+True Negative (TN): Prediksi benar (negatif) sesuai dengan aktual.
+
+False Positive (FP): Prediksi positif, tetapi sebenarnya negatif (Type I Error).
+
+False Negative (FN): Prediksi negatif, tetapi sebenarnya positif (Type II Error).
 
 ---
 
