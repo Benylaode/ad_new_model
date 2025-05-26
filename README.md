@@ -70,28 +70,37 @@ Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
 ### Uraian Fitur:
 
-| Fitur                   | Tipe         | Deskripsi                                                |
-| :---------------------- | :----------- | :------------------------------------------------------- |
-| `user_id`               | Categorical  | ID unik pengguna.                                        |
-| `timestamp`             | String       | Waktu interaksi pengguna dengan iklan.                   |
-| `device_type`           | Categorical  | Jenis perangkat yang digunakan pengguna (misalnya, mobile, desktop, tablet). |
-| `location`              | Categorical  | Lokasi geografis pengguna.                               |
-| `age_group`             | Categorical  | Kelompok usia pengguna (misalnya, 18-24, 25-34).         |
-| `gender`                | Categorical  | Jenis kelamin pengguna.                                  |
-| `ad_id`                 | Categorical  | ID unik iklan.                                           |
-| `content_type`          | Categorical  | Jenis konten iklan (misalnya, video, gambar, teks).      |
-| `ad_topic`              | Categorical  | Topik atau kategori iklan.                               |
-| `ad_target_audience`    | Categorical  | Target audiens spesifik untuk iklan.                     |
-| `click_through_rate`    | Numerical    | Rasio klik terhadap tayangan iklan (CTR).                |
-| `conversion_rate`       | Numerical    | Rasio konversi setelah klik iklan.                       |
-| `engagement_level`      | Categorical  | Tingkat interaksi pengguna dengan iklan (misalnya, high, medium, low). |
-| `view_time`             | Numerical    | Durasi menonton iklan dalam detik.                       |
-| `cost_per_click`        | Numerical    | Biaya yang dikeluarkan setiap kali iklan diklik.         |
-| `calculated_roi`        | Numerical    | Return on Investment yang dihitung dari kampanye.        |
-| `ad_budget`             | Numerical    | Total anggaran yang dialokasikan untuk iklan.            |
-| `ad_duration`           | Numerical    | Lama iklan ditayangkan.                                  |
-| `previous_campaign_perf`| Categorical  | Performa kampanye sebelumnya untuk pengguna.             |
-| `performance`           | Target       | Performa iklan (Low, Medium, High).                      |
+| Fitur                  | Tipe        | Deskripsi                                                        |
+| ---------------------- | ----------- | ---------------------------------------------------------------- |
+| `user_id`              | Numerical   | ID unik pengguna.                                                |
+| `timestamp`            | Categorical | Waktu interaksi pengguna dengan iklan.                           |
+| `device_type`          | Categorical | Jenis perangkat pengguna (misalnya: mobile, desktop, tablet).    |
+| `location`             | Categorical | Lokasi geografis pengguna.                                       |
+| `age_group`            | Categorical | Kelompok usia pengguna (misal: 18-24, 25-34, dst).               |
+| `gender`               | Categorical | Jenis kelamin pengguna.                                          |
+| `ad_id`                | Categorical | ID unik iklan.                                                   |
+| `content_type`         | Categorical | Jenis konten iklan (video, gambar, teks).                        |
+| `ad_topic`             | Categorical | Topik atau kategori iklan.                                       |
+| `ad_target_audience`   | Categorical | Target audiens spesifik yang dituju oleh iklan.                  |
+| `click_through_rate`   | Numerical   | Rasio klik terhadap tayangan iklan (CTR).                        |
+| `conversion_rate`      | Numerical   | Rasio konversi setelah klik iklan.                               |
+| `engagement_level`     | Categorical | Tingkat interaksi pengguna terhadap iklan (Low, Medium, High).   |
+| `view_time`            | Numerical   | Durasi menonton iklan dalam detik.                               |
+| `cost_per_click`       | Numerical   | Biaya rata-rata per klik iklan.                                  |
+| `click_through_rate.1` | Numerical   | Versi alternatif atau hasil transformasi CTR.                    |
+| `conversion_rate.1`    | Numerical   | Versi alternatif atau hasil transformasi conversion rate.        |
+| `calculated_ROI`       | Numerical   | Return on Investment yang dihitung berdasarkan metrik iklan.     |
+| `ROI_Category`         | Categorical | Kategori ROI: Low, Medium, atau High.                            |
+| `Performance`          | Categorical | Label target klasifikasi performa iklan: Low, Medium, atau High. |
+
+---
+
+> 🔎 Catatan:
+>
+> * Kolom `Performance` adalah **target variabel utama** untuk klasifikasi.
+> * `click_through_rate.1` dan `conversion_rate.1` diasumsikan hasil rekalkulasi atau fitur turunan.
+> * Semua tipe disesuaikan dari `dtypes` Python (`int64` = Numerical, `object` = Categorical/String, `float64` = Numerical).
+
 
 -----
 
@@ -117,7 +126,19 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 6.  **Encoding Kategorikal:**
 
-      * Menggunakan **One-Hot Encoding** pada kolom-kolom kategorikal seperti `gender`, `device_type`, `content_type`, `location`, `age_group`, `ad_topic`, `ad_target_audience`, `engagement_level`, dan `previous_campaign_perf`. Ini mengubah variabel kategorikal menjadi format numerik yang dapat dipahami oleh model *machine learning*.
+      * Menggunakan **One-Hot Encoding** pada kolom-kolom kategorikal seperti `gender`, `device_type`, `content_type`, `location`, `age_group`, `ad_topic`, `ad_target_audience`, `engagement_level`, dan `previous_campaign_perf`. Ini mengubah variabel kategorikal menjadi format numerik yang dapat dipahami oleh model *machine learning*. dan sebelum itu dalam proses ini hanya beberapa data kategorikal yang relevan yang akan di ambil yakni yang ada di bawah ini :
+    
+' categorical_list = [
+     "device_type",
+     "location",
+     "age_group",
+     "gender",
+     "content_type",
+     "ad_topic",
+     "ad_target_audience",
+     "engagement_level",
+     "Performance",
+]'
 
 7.  **Pembagian Dataset untuk Setiap Model:**
 
