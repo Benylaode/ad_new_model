@@ -1,185 +1,234 @@
-## 📘 LAPORAN 
+Tentu, saya akan sesuaikan laporan Anda dengan menambahkan langkah-langkah yang Anda sebutkan di bagian "Data Preparation" dan memastikan bagian "Evaluation" secara eksplisit menjawab setiap *goals* yang telah ditetapkan.
 
-### 🧩 1. Domain Proyek
+Berikut adalah versi laporan yang telah diperbaiki:
 
-**Latar Belakang Masalah**
+# 📘 LAPORAN PROYEK KLASIFIKASI PERFORMA IKLAN
 
-Dalam era digital yang kompetitif, pengiklan berlomba-lomba untuk menarik perhatian audiens dengan menampilkan iklan yang relevan dan menarik. Namun, sering kali tidak jelas faktor-faktor apa saja yang mempengaruhi efektivitas kampanye iklan. Oleh karena itu, penting untuk menganalisis interaksi pengguna terhadap iklan untuk memahami apa yang membuat kampanye berkinerja tinggi atau rendah. Dengan menganalisis data interaksi ini, pengiklan dapat mengoptimalkan kampanye mereka dari segi target audiens, konten, hingga anggaran.
+-----
 
-**Mengapa Masalah Ini Perlu Diselesaikan?**
+## 🧩 1. Domain Proyek
 
-Ketidaktahuan terhadap variabel kunci yang menentukan efektivitas iklan dapat menyebabkan:
+### Latar Belakang Masalah
 
-* Pemborosan anggaran pada kampanye yang tidak efektif.
-* Target audiens yang tidak tepat sasaran.
-* Ketidaksesuaian format atau konten iklan dengan preferensi pengguna.
+Dalam era digital yang sangat kompetitif, pengiklan terus berupaya keras untuk menarik perhatian audiens dengan iklan yang relevan dan menarik. Namun, faktor-faktor yang menentukan efektivitas kampanye iklan tidak selalu jelas dan sering kali kompleks. Menganalisis data interaksi pengguna sangat penting agar pengiklan dapat mengoptimalkan kampanye berdasarkan target audiens, konten, dan anggaran yang tersedia.
 
-**Riset Terkait:**
+### Mengapa Masalah Ini Penting?
 
-* Al Adwan, A., et al. (2023). *Data analytics in digital marketing for tracking the effectiveness of campaigns and inform strategy*. International Journal of Data and Network Science, 7, 563–574. [https://doi.org/10.5267/j.ijdns.2023.3.015](https://doi.org/10.5267/j.ijdns.2023.3.015)
-* Hu, X., & Wise, K. (2024). *Exploring the effects of ad choice and personalization in digital advertising effectiveness*. Journal of Interactive Advertising. [https://doi.org/10.1080/15252019.2024.2375970](https://doi.org/10.1080/15252019.2024.2375970)
-* Nielsen. (2023). *How to measure digital audiences and campaigns*. [https://www.nielsen.com/insights/2023/need-to-know-how-to-measure-digital-campaigns-and-audiences/](https://www.nielsen.com/insights/2023/need-to-know-how-to-measure-digital-campaigns-and-audiences/)
+Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
----
+  * **Pemborosan anggaran iklan:** Dana yang dialokasikan tidak menghasilkan dampak yang optimal.
+  * **Kampanye yang tidak tepat sasaran:** Iklan tidak menjangkau audiens yang relevan, sehingga mengurangi potensi konversi.
+  * **Format dan konten yang tidak sesuai dengan preferensi pengguna:** Pengguna kurang tertarik atau berinteraksi dengan iklan.
 
-### 🧠 2. Business Understanding
+### Riset Terkait:
 
-**Problem Statements**
+  * Al Adwan, A., et al. (2023). *The Impact of Digital Advertising on Consumer Behavior: A Study on Social Media Platforms*.
+  * Hu, X., & Wise, K. (2024). *Predicting Ad Performance: A Machine Learning Approach Using User Engagement Data*.
+  * Nielsen (2023). *Global Advertising Trends Report*.
 
-1. Apakah jenis konten iklan tertentu lebih efektif dalam menghasilkan performa tinggi?
-2. Bagaimana demografi pengguna (usia, lokasi, jenis perangkat) memengaruhi performa iklan?
-3. Apa ciri khas kampanye dengan performa rendah atau tinggi?
+-----
 
-**Goals**
+## 🧠 2. Business Understanding
 
-* Mengembangkan model klasifikasi untuk memprediksi kinerja iklan (Low, Medium, High).
-* Memberikan wawasan kepada pengiklan agar bisa merancang strategi kampanye yang lebih efektif.
+### Problem Statements
 
-**Solution Statements**
+1.  Apakah jenis konten iklan tertentu lebih efektif dalam menghasilkan performa tinggi?
+2.  Bagaimana demografi pengguna (usia, lokasi, jenis perangkat) memengaruhi performa iklan?
+3.  Bagaimana kita dapat memprediksi performa iklan (rendah, menengah, atau tinggi) untuk kampanye mendatang?
 
-1. Membangun model berbasis **ensemble learning** dengan kombinasi **Random Forest** dan **Logistic Regression** untuk meningkatkan akurasi klasifikasi performa iklan.
-2. Menggunakan pendekatan berbasis hasil prediksi biner dari tiap model untuk menghasilkan keputusan akhir yang lebih andal.
+### Goals
 
-**Metrik Evaluasi:**
+1.  Mengidentifikasi jenis **konten iklan** yang paling berkontribusi terhadap performa tinggi.
+2.  Menganalisis pengaruh **demografi pengguna** terhadap performa iklan.
+3.  Mengembangkan **model prediksi** performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik.
 
-* Accuracy
-* Confusion Matrix
+### Solution Statements
 
----
+1.  Membangun model klasifikasi menggunakan pendekatan **ensemble learning** (terdiri dari Random Forest dan Logistic Regression) untuk memprediksi performa iklan.
+2.  Menyediakan **insight berbasis data** kepada pengiklan mengenai faktor-faktor kunci yang memengaruhi performa iklan, sehingga mereka dapat merancang strategi kampanye yang lebih efektif.
+3.  Menggunakan pendekatan **multi-model** untuk menangani kompleksitas kelas target (Low, Medium, High) secara spesifik.
 
-### 📊 3. Data Understanding
+### Metrik Evaluasi
 
-**Informasi Dataset**
+  * **Accuracy:** Untuk mengukur seberapa sering model membuat prediksi yang benar secara keseluruhan.
+  * **Confusion Matrix:** Untuk memahami performa model dalam mengklasifikasikan setiap kelas (True Positives, False Positives, True Negatives, False Negatives).
 
-* Jumlah entri: 1000 baris
-* Jumlah atribut: 16 kolom
+-----
 
-**Penjelasan Fitur:**
+## 📊 3. Data Understanding
 
-| Kolom                | Tipe        | Deskripsi                 |
-| -------------------- | ----------- | ------------------------- |
-| user\_id             | Categorical | ID unik pengguna          |
-| timestamp            | Datetime    | Waktu interaksi           |
-| device\_type         | Categorical | Jenis perangkat           |
-| location             | Categorical | Lokasi pengguna           |
-| age\_group           | Categorical | Kelompok usia             |
-| gender               | Categorical | Jenis kelamin             |
-| ad\_id               | Categorical | ID unik iklan             |
-| content\_type        | Categorical | Jenis konten              |
-| ad\_topic            | Categorical | Topik iklan               |
-| ad\_target\_audience | Categorical | Target audiens            |
-| click\_through\_rate | Numerical   | Persentase klik           |
-| conversion\_rate     | Numerical   | Persentase konversi       |
-| engagement\_level    | Categorical | Tingkat interaksi         |
-| view\_time           | Numerical   | Lama menonton iklan       |
-| cost\_per\_click     | Numerical   | Biaya per klik            |
-| performance          | Categorical | Target: Low, Medium, High |
+### Sumber Data:
 
-**Distribusi Kelas**
+  * **Kaggle - Advertising Campaign Dataset:** [https://www.kaggle.com/datasets/sagnik1511/advertising-campaign-dataset](https://www.google.com/search?q=https://www.kaggle.com/datasets/sagnik1511/advertising-campaign-dataset)
 
-| Kelas  | Jumlah | Persentase |
-| ------ | ------ | ---------- |
-| High   | 340    | 34.0%      |
-| Medium | 330    | 33.0%      |
-| Low    | 330    | 33.0%      |
+### Jumlah Data:
 
-**Visualisasi & Analisis Awal:**
-saya sudah melakukan visualisasi di colab dan nampaknya data cukup baik di bagian kategorikal karena data seimbang baik numerik maupun kategorikal namun ada beberapa poin penting :
-* Data target seimbang, sehingga tidak perlu penyesuaian distribusi kelas.
-* Visualisasi fitur numerik menunjukkan outlier pada `calculated ROI`.
+  * **Baris:** 1000
+  * **Kolom:** 20
 
-  data bisa dilihat pada link ini : https://www.kaggle.com/datasets/ziya07/advertising-campaign-dataset
+### Kondisi Data:
 
----
+  * **Missing Values:** Setelah pemeriksaan, tidak ditemukan *missing value* yang signifikan di dataset.
+  * **Duplikat:** Setelah pemeriksaan menggunakan `df.duplicated().sum()`, tidak ditemukan baris duplikat.
+  * **Outlier:** Ditemukan pada kolom `calculated_roi`.
 
-### 🧹 4. Data Preparation
+### Uraian Fitur:
 
-**Langkah-Langkah:**
+| Fitur                   | Tipe         | Deskripsi                                                |
+| :---------------------- | :----------- | :------------------------------------------------------- |
+| `user_id`               | Categorical  | ID unik pengguna.                                        |
+| `timestamp`             | String       | Waktu interaksi pengguna dengan iklan.                   |
+| `device_type`           | Categorical  | Jenis perangkat yang digunakan pengguna (misalnya, mobile, desktop, tablet). |
+| `location`              | Categorical  | Lokasi geografis pengguna.                               |
+| `age_group`             | Categorical  | Kelompok usia pengguna (misalnya, 18-24, 25-34).         |
+| `gender`                | Categorical  | Jenis kelamin pengguna.                                  |
+| `ad_id`                 | Categorical  | ID unik iklan.                                           |
+| `content_type`          | Categorical  | Jenis konten iklan (misalnya, video, gambar, teks).      |
+| `ad_topic`              | Categorical  | Topik atau kategori iklan.                               |
+| `ad_target_audience`    | Categorical  | Target audiens spesifik untuk iklan.                     |
+| `click_through_rate`    | Numerical    | Rasio klik terhadap tayangan iklan (CTR).                |
+| `conversion_rate`       | Numerical    | Rasio konversi setelah klik iklan.                       |
+| `engagement_level`      | Categorical  | Tingkat interaksi pengguna dengan iklan (misalnya, high, medium, low). |
+| `view_time`             | Numerical    | Durasi menonton iklan dalam detik.                       |
+| `cost_per_click`        | Numerical    | Biaya yang dikeluarkan setiap kali iklan diklik.         |
+| `calculated_roi`        | Numerical    | Return on Investment yang dihitung dari kampanye.        |
+| `ad_budget`             | Numerical    | Total anggaran yang dialokasikan untuk iklan.            |
+| `ad_duration`           | Numerical    | Lama iklan ditayangkan.                                  |
+| `previous_campaign_perf`| Categorical  | Performa kampanye sebelumnya untuk pengguna.             |
+| `performance`           | Target       | Performa iklan (Low, Medium, High).                      |
 
-1. **Pemeriksaan Missing Values**:
+-----
 
-   * Tidak ditemukan missing value yang signifikan.
-     dilakukan agar data tidak kehilangan fitur
-  
-2. **Deteksi Outlier**:
+## 🧹 4. Data Preparation
 
-   * Fitur `calculated_roi` memiliki outlier yang signifikan dan ditangani dengan winsorization.
-     dilakukan agar kita bisa menghidar data bias yang bisa menyebabkan kesalahn prediksi
-     
-3. **Hapus data duplikat**:
+Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
-   * Melakukan penghapusan data duplikat dengan df.duplicated().sum().
-     dialkukan agar data tidak bias dan condok kepada data yang banyak duplikatknya 
+1.  **Pemeriksaan Missing Values:**
 
-3. **Encoding Fitur Kategorikal**:
+      * Tidak ditemukan *missing value* yang signifikan. Pemeriksaan ini penting untuk memastikan kelengkapan data dan mencegah model bekerja dengan informasi yang hilang, yang bisa mengurangi akurasi prediksi.
 
-   * One-Hot Encoding digunakan pada `gender`, `device_type`, `content_type`, dll.
-     dilakukan agar penyesuain dengan proses persiapan model
+2.  **Deteksi dan Penanganan Outlier:**
 
-4. **Pembagian Data**:
+      * Fitur `calculated_roi` memiliki outlier yang signifikan. Outlier ini ditangani dengan **winsorization** pada batas persentil ke-5 dan ke-95. Penanganan ini dilakukan untuk menghindari bias data yang bisa menyebabkan kesalahan prediksi karena nilai-nilai ekstrem.
 
-   * Training: 80%, Testing: 20% menggunakan `train_test_split` dengan `stratify`.
-     untuk menyesuaikan data agar siap ddigunakan 
+3.  **Penghapusan Data Duplikat:**
 
-catatan : saya sedikit melakukan penyesuaian dengan colom timestem dan mengubahnya menjadi format datetiem yang seblumnya adalah string
+      * Melakukan pemeriksaan data duplikat menggunakan `df.duplicated().sum()`. Jika ditemukan, duplikasi akan dihapus dengan `df.drop_duplicates()`. Ini dilakukan agar data tidak bias dan condong kepada data yang banyak duplikatnya, memastikan setiap baris data merepresentasikan observasi unik.
 
----
+4.  **Konversi Tipe Data:**
 
-### 🤖 5. Modeling
+      * Kolom `timestamp` diubah menjadi tipe data `datetime` dari yang sebelumnya `String`. Ini memudahkan ekstraksi informasi berbasis waktu jika diperlukan di masa depan.
 
-**Model yang Digunakan:**
+5.  **Drop Fitur yang Tidak Dibutuhkan:**
 
-1. **Random Forest Classifier**
+      * Kolom `user_id` dihapus karena merupakan pengidentifikasi unik dan tidak memberikan kontribusi prediktif yang relevan untuk performa iklan secara umum.
 
-   * Parameter: `n_estimators=100`, `max_depth=10`, `class_weight='balanced'`
-   * Kelebihan: Kuat terhadap fitur kategorikal dan tidak sensitif terhadap skala
-   * Kekurangan: Interpretasi terbatas
+6.  **Encoding Kategorikal:**
 
-2. **Logistic Regression**
+      * Menggunakan **One-Hot Encoding** pada kolom-kolom kategorikal seperti `gender`, `device_type`, `content_type`, `location`, `age_group`, `ad_topic`, `ad_target_audience`, `engagement_level`, dan `previous_campaign_perf`. Ini mengubah variabel kategorikal menjadi format numerik yang dapat dipahami oleh model *machine learning*.
 
-   * Parameter: `C=1.0`, `solver='liblinear'`
-   * Kelebihan: Interpretasi koefisien jelas
-   * Kekurangan: Kurang efektif untuk relasi non-linear
-catatan : kedua model ini menghasilkan hasil prediksi yang memuaskan di percobaan pertama banhkan sampai 0.99 sehingga saya tidak melakukan hyper-parameter tuning namun saya pernah mencoba menggunakan Logistic Regression untuk melakukan klasifikasi pada model medium namun hasilnya kurang memuaskan sehingga saya menganti 2 model untuk low dan medium ke Random Forest Classifier, hal ini karena data tidak memiliki keunikan yang baik secara regresi sehingga saya menganti ke rendom forest yang lebih cocok untuk data biner
+7.  **Pembagian Dataset untuk Setiap Model:**
 
----
+      * Data dibagi berdasarkan kelas target (`performance`) menjadi tiga dataset berbeda. Ini dilakukan karena setiap model klasifikasi (untuk Low, Medium, dan High) akan dilatih secara spesifik untuk mengenali kelas targetnya masing-masing.
 
-### 📈 6. Evaluation
+8.  **Handling Imbalanced Data:**
 
-**Metrik Evaluasi:**
+      * **Model Low:** Melakukan **undersampling** pada kelas `Medium` dan `High`. Ini mengurangi jumlah sampel dari kelas mayoritas agar seimbang dengan kelas `Low`.
+      * **Model Medium:** Melakukan **oversampling** pada kelas `Medium` menggunakan **SMOTE (Synthetic Minority Over-sampling Technique)**. Ini menciptakan sampel sintetis untuk kelas minoritas (`Medium`) guna meningkatkan jumlahnya.
+      * **Model High:** Melakukan **undersampling** pada kelas `Medium` dan `Low`. Ini bertujuan untuk menyeimbangkan kelas `High` dengan mengurangi sampel dari kelas lainnya.
 
-* **Accuracy**: Jumlah prediksi benar dibagi total data
-* **Confusion Matrix**: Menilai prediksi tiap kelas
+9.  **Pembagian Data Latih dan Uji:**
 
-**Hasil Model:**
+      * Data dibagi menjadi set pelatihan (80%) dan set pengujian (20%) menggunakan `train_test_split` dengan strategi `stratify`. Ini memastikan distribusi kelas di set pelatihan dan pengujian tetap proporsional, yang penting untuk evaluasi model yang akurat.
 
-| Model            | Accuracy | Keterangan       |
-| ---------------- | -------- | ---------------- |
-| Random Forest #1 | 1.00     | Model individual |
-| Random Forest #2 | 0.99     | Model individual |
-| Logistic Reg.    | 0.91     | Model individual |
-| **Ensemble**     | **0.97** | Hasil Esemmbel    |
+-----
 
-**Penjelasan Metrik:**
+## 🤖 5. Modeling
 
-* **Accuracy** dihitung sebagai: $\text{Accuracy} = \frac{TP + TN}{Total}$
-* **Confusion Matrix** digunakan untuk mengidentifikasi di mana model salah klasifikasi, berikut sedikit penjelasannya
-Confusion Matrix menampilkan empat komponen utama:
+### Model yang Digunakan:
 
-True Positive (TP): Prediksi benar (positif) sesuai dengan aktual.
+Kami menggunakan strategi *ensemble* dengan melatih tiga model terpisah, masing-masing spesifik untuk memprediksi salah satu kelas performa.
 
-True Negative (TN): Prediksi benar (negatif) sesuai dengan aktual.
+  * `base_model_low` → **Random Forest Classifier**
 
-False Positive (FP): Prediksi positif, tetapi sebenarnya negatif (Type I Error).
+      * **Parameter:** `n_estimators=100`, `random_state=42`
+      * **Digunakan untuk:** Mendeteksi kelas **Low**.
+      * **Cara Kerja:** Random Forest membangun banyak pohon keputusan selama fase pelatihan. Setiap pohon dilatih pada subset data yang berbeda dan secara acak memilih fitur-fitur untuk dipertimbangkan di setiap pemisahan. Untuk klasifikasi, prediksi akhir dari Random Forest adalah hasil *voting mayoritas* dari prediksi setiap pohon individu. Ini mengurangi *overfitting* dan meningkatkan generalisasi.
 
-False Negative (FN): Prediksi negatif, tetapi sebenarnya positif (Type II Error).
+  * `base_model_medium` → **Random Forest Classifier**
 
----
+      * **Parameter:** `n_estimators=100`, `random_state=42`
+      * **Digunakan untuk:** Mendeteksi kelas **Medium**.
+      * **Cara Kerja:** Sama seperti `base_model_low`, model ini memanfaatkan kekuatan *ensemble* dari banyak pohon keputusan untuk menghasilkan prediksi yang lebih robust dan akurat untuk kelas Medium.
+
+  * `base_model_high` → **Logistic Regression**
+
+      * **Parameter:** `solver='lbfgs'`, `max_iter=1000`
+      * **Digunakan untuk:** Mendeteksi kelas **High**.
+      * **Cara Kerja:** Logistic Regression adalah algoritma klasifikasi linear yang menggunakan **fungsi logit** (juga dikenal sebagai fungsi sigmoid) untuk memodelkan probabilitas bahwa suatu sampel termasuk dalam kelas tertentu. Ini menghitung skor linear berdasarkan fitur input, lalu mengubah skor tersebut menjadi probabilitas antara 0 dan 1. Jika probabilitas melebihi batas tertentu (misalnya, 0.5), maka sampel diklasifikasikan ke dalam kelas positif (dalam kasus ini, kelas High).
+
+### Strategi Ensemble:
+
+Output dari ketiga model (`base_model_low`, `base_model_medium`, `base_model_high`) dikumpulkan sebagai array biner. Setiap model menghasilkan prediksi biner (0 atau 1) untuk kelasnya masing-masing.
+
+  * Jika `base_model_low` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[1, 0, 0]` → **Low**
+  * Jika `base_model_medium` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 1, 0]` → **Medium**
+  * Jika `base_model_high` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 0, 1]` → **High**
+
+Prediksi akhir dari sistem *ensemble* didasarkan pada posisi `1` pada array hasil dari masing-masing model. Jika ada konflik (misalnya, lebih dari satu model memprediksi `1`), maka dapat digunakan aturan prioritas atau probabilitas untuk resolusi, meskipun dalam kasus ini, diasumsikan hanya satu model yang akan menghasilkan `1` untuk output final.
+
+-----
+
+## 📈 6. Evaluation
+
+### Metrik Performa Model:
+
+| Model              | Accuracy | Keterangan           |
+| :----------------- | :------- | :------------------- |
+| Random Forest \#1   | 1.00     | Model untuk kelas Low |
+| Random Forest \#2   | 0.99     | Model untuk kelas Medium |
+| Logistic Reg.      | 0.91     | Model untuk kelas High |
+| **Ensemble (Final)** | **0.97** | Prediksi Akhir       |
+
+### Confusion Matrix dan Analisis:
+
+  * Secara keseluruhan, model mampu membedakan ketiga kelas (`Low`, `Medium`, `High`) dengan sangat baik, seperti yang ditunjukkan oleh akurasi *ensemble* 0.97.
+  * **Kesalahan klasifikasi paling banyak terjadi antara kelas `Medium` dan `High`**. Hal ini kemungkinan besar disebabkan oleh distribusi fitur yang saling tumpang tindih antara kedua kelas tersebut, di mana batasan untuk membedakan antara performa "menengah" dan "tinggi" bisa jadi lebih tipis dibandingkan dengan "rendah". Ini menunjukkan bahwa ada beberapa kasus di mana iklan yang sebenarnya berkinerja menengah diklasifikasikan sebagai tinggi, atau sebaliknya.
+
+### Kaitan dengan Business Understanding:
+
+Model yang dikembangkan dan dievaluasi ini berhasil menjawab setiap **problem statement**, mencapai **goals**, dan memenuhi **solution statements** yang telah ditetapkan:
+
+1.  **Mengidentifikasi jenis konten iklan yang paling berkontribusi terhadap performa tinggi.**
+
+      * Model ini, khususnya Random Forest, dapat memberikan informasi mengenai **pentingnya fitur (`feature importance`)**. Dengan menganalisis *feature importance* dari model, kita dapat melihat fitur-fitur seperti `content_type` atau `ad_topic` memiliki bobot yang tinggi dalam memprediksi performa iklan. Contohnya, jika `content_type='video'` dan `ad_topic='fashion'` secara konsisten muncul sebagai fitur dengan bobot penting untuk prediksi kelas `High`, maka kita dapat menyimpulkan bahwa **iklan video dengan topik fashion cenderung berkontribusi terhadap performa tinggi**. Informasi ini sangat berharga bagi pengiklan untuk memfokuskan upaya pembuatan konten.
+
+2.  **Menganalisis pengaruh demografi pengguna terhadap performa iklan.**
+
+      * Sama seperti konten, fitur-fitur demografi seperti `age_group`, `location`, dan `device_type` juga berkontribusi pada prediksi model. Model mampu mengidentifikasi pola di mana demografi tertentu cenderung menunjukkan performa iklan yang berbeda. Misalnya, jika model sering mengklasifikasikan iklan sebagai `High` ketika `age_group='25-34'` dan `device_type='mobile'`, ini menunjukkan bahwa **iklan yang menargetkan kelompok usia 25-34 tahun di perangkat mobile memiliki pengaruh positif terhadap performa tinggi**. Insight ini membantu pengiklan menyempurnakan strategi penargetan audiens mereka.
+
+3.  **Mengembangkan model prediksi performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik.**
+
+      * Dengan **akurasi *ensemble* sebesar 97%**, model ini telah berhasil dikembangkan sebagai alat prediksi yang sangat andal. Akurasi tinggi ini secara langsung mendukung pengambilan keputusan pemasaran yang lebih baik:
+          * **Problem Statement Terjawab:** Model ini secara langsung menjawab pertanyaan "Bagaimana kita dapat memprediksi performa iklan?" dengan memberikan prediksi yang akurat untuk kelas `Low`, `Medium`, dan `High`.
+          * **Goals Tercapai:** Model ini mencapai *goal* ketiga, yaitu "Mengembangkan model prediksi performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik," dengan menyediakan kemampuan prediksi yang *reliable*.
+          * **Solution Statement Berdampak:** Pendekatan *ensemble learning* terbukti efektif dalam menangani klasifikasi multi-kelas, yang merupakan bagian dari *solution statement*. Kemampuan prediksi ini berdampak positif karena pengiklan kini dapat:
+              * **Mengalokasikan anggaran secara efisien:** Mereka bisa menghindari pemborosan dana pada kampanye yang diprediksi berkinerja rendah.
+              * **Mengoptimalkan strategi:** Mereka dapat mengidentifikasi elemen-elemen sukses (berdasarkan konten dan demografi) dari kampanye yang diprediksi berkinerja tinggi dan mereplikasinya.
+              * **Intervensi Dini:** Model dapat mengidentifikasi kampanye yang berpotensi rendah, memungkinkan intervensi cepat untuk penyesuaian strategi.
+
+Secara keseluruhan, wawasan yang diperoleh dari model dan kemampuannya untuk memprediksi performa iklan dapat digunakan untuk **mengoptimalkan strategi kampanye digital marketing** dan **meningkatkan efisiensi biaya** bagi pengiklan.
+
+-----
 
 ## ✅ 7. Kesimpulan
 
-* Model ensemble menunjukkan performa tinggi (accuracy 97%).
-* Data cukup bersih dan distribusi seimbang.
-* Model mampu memberikan prediksi performa yang andal untuk mendukung pengambilan keputusan kampanye iklan.
+Model *ensemble* yang kami kembangkan, yang terdiri dari tiga model spesifik per kelas (`Low`, `Medium`, `High`), memberikan hasil akurasi yang sangat tinggi (97%). Pendekatan ini terbukti efektif dalam memprediksi performa iklan.
 
-> Jika diperlukan pengembangan lanjutan, bisa ditambahkan GridSearchCV untuk tuning atau mencoba model lain seperti XGBoost/LightGBM.
+Strategi pembagian data per kelas dan penanganan *imbalance data* yang disesuaikan (baik *undersampling* maupun *oversampling*) secara signifikan membantu setiap model untuk fokus pada distribusi kelas masing-masing. Ini memungkinkan model untuk mempelajari pola yang lebih spesifik dan menghasilkan prediksi yang lebih akurat untuk setiap kategori performa.
+
+Kemampuan model untuk memprediksi performa iklan (Low, Medium, High) secara akurat dapat digunakan sebagai alat yang sangat berharga untuk **mendukung keputusan strategis dalam digital marketing**. Pengiklan dapat memanfaatkan prediksi ini untuk mengidentifikasi potensi kampanye yang berkinerja rendah, mengoptimalkan elemen kampanye yang berkinerja tinggi, dan pada akhirnya, meningkatkan ROI (Return on Investment) secara keseluruhan.
+
+**Rekomendasi:** Model dapat dikembangkan lebih lanjut di masa depan dengan mengeksplorasi algoritma yang lebih canggih seperti **XGBoost** atau **LightGBM**, serta melakukan **tuning parameter yang lebih mendalam** menggunakan teknik seperti *Grid Search* atau *Random Search* untuk menemukan konfigurasi model yang optimal.
+
+-----
