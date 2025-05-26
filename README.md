@@ -99,17 +99,13 @@ Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
 Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
-1.  **Pemeriksaan Missing Values:**
-
-      * Tidak ditemukan *missing value* yang signifikan. Pemeriksaan ini penting untuk memastikan kelengkapan data dan mencegah model bekerja dengan informasi yang hilang, yang bisa mengurangi akurasi prediksi.
-
-2.  **Deteksi dan Penanganan Outlier:**
+1. **Deteksi dan Penanganan Outlier:**
 
       * Fitur `calculated_roi` memiliki outlier yang signifikan. Outlier ini ditangani dengan **winsorization** pada batas persentil ke-5 dan ke-95. Penanganan ini dilakukan untuk menghindari bias data yang bisa menyebabkan kesalahan prediksi karena nilai-nilai ekstrem.
 
 3.  **Penghapusan Data Duplikat:**
 
-      * Melakukan pemeriksaan data duplikat menggunakan `df.duplicated().sum()`. Jika ditemukan, duplikasi akan dihapus dengan `df.drop_duplicates()`. Ini dilakukan agar data tidak bias dan condong kepada data yang banyak duplikatnya, memastikan setiap baris data merepresentasikan observasi unik.
+      * Melakukan penghapusan dengan `df.drop_duplicates()`. Ini dilakukan agar data tidak bias dan condong kepada data yang banyak duplikatnya, memastikan setiap baris data merepresentasikan observasi unik.
 
 4.  **Konversi Tipe Data:**
 
@@ -137,7 +133,9 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
       * Data dibagi menjadi set pelatihan (80%) dan set pengujian (20%) menggunakan `train_test_split` dengan strategi `stratify`. Ini memastikan distribusi kelas di set pelatihan dan pengujian tetap proporsional, yang penting untuk evaluasi model yang akurat.
 
------
+Tentu, berikut adalah potongan bagian "Modeling" dari laporan Anda, termasuk penjelasan matematis untuk Random Forest dan Logistic Regression:
+
+---
 
 ## 🤖 5. Modeling
 
@@ -145,31 +143,48 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 Kami menggunakan strategi *ensemble* dengan melatih tiga model terpisah, masing-masing spesifik untuk memprediksi salah satu kelas performa.
 
-  * `base_model_low` → **Random Forest Classifier**
+* `base_model_low` → **Random Forest Classifier**
+    * **Parameter:** `n_estimators=100`, `random_state=42`
+    * **Digunakan untuk:** Mendeteksi kelas **Low**.
+    * **Cara Kerja:** **Random Forest** adalah algoritma pembelajaran *ensemble* yang membangun banyak pohon keputusan selama fase pelatihan. Ide utamanya adalah untuk mengoreksi kebiasaan *overfitting* dari satu pohon keputusan. Setiap pohon dalam Random Forest dibangun dengan dua elemen acak:
+        1.  **Bagging (Bootstrap Aggregating):** Setiap pohon dilatih pada subset data yang berbeda, yang diambil secara acak dengan penggantian (*bootstrap sample*) dari dataset pelatihan asli. Ini berarti beberapa data mungkin dipilih berkali-kali, sementara yang lain mungkin tidak dipilih sama sekali untuk pohon tertentu.
+        2.  **Random Feature Subset:** Saat membangun setiap pohon, pada setiap node split, hanya sebagian acak dari fitur-fitur yang dipertimbangkan untuk membuat pemisahan terbaik. Ini mencegah satu atau dua fitur yang sangat dominan untuk mendominasi semua pohon, sehingga mendorong keragaman di antara pohon-pohon.
+        Untuk klasifikasi, prediksi akhir dari Random Forest adalah hasil **voting mayoritas** dari prediksi setiap pohon individu. Secara matematis, jika kita memiliki $N$ pohon keputusan dalam hutan, dan setiap pohon $T_i(X)$ memberikan prediksi untuk input $X$, maka prediksi akhir Random Forest ($H(X)$) adalah:
+        $$H(X) = \text{mode} \{T_1(X), T_2(X), ..., T_N(X)\}$$
+        di mana *mode* berarti kelas yang paling sering diprediksi oleh individu pohon. Proses ini mengurangi varians dan *overfitting*, serta meningkatkan generalisasi dan stabilitas model.
 
-      * **Parameter:** `n_estimators=100`, `random_state=42`
-      * **Digunakan untuk:** Mendeteksi kelas **Low**.
-      * **Cara Kerja:** Random Forest membangun banyak pohon keputusan selama fase pelatihan. Setiap pohon dilatih pada subset data yang berbeda dan secara acak memilih fitur-fitur untuk dipertimbangkan di setiap pemisahan. Untuk klasifikasi, prediksi akhir dari Random Forest adalah hasil *voting mayoritas* dari prediksi setiap pohon individu. Ini mengurangi *overfitting* dan meningkatkan generalisasi.
+* `base_model_medium` → **Random Forest Classifier**
+    * **Parameter:** `n_estimators=100`, `random_state=42`
+    * **Digunakan untuk:** Mendeteksi kelas **Medium**.
+    * **Cara Kerja:** Sama seperti `base_model_low`, model ini memanfaatkan kekuatan *ensemble* dari banyak pohon keputusan yang dibangun secara acak dari subset data dan fitur. Ini bertujuan untuk menghasilkan prediksi yang lebih robust dan akurat untuk kelas Medium dengan mengurangi varians dan meningkatkan kemampuan generalisasi.
 
-  * `base_model_medium` → **Random Forest Classifier**
+* `base_model_high` → **Logistic Regression**
+    * **Parameter:** `solver='lbfgs'`, `max_iter=1000`
+    * **Digunakan untuk:** Mendeteksi kelas **High**.
+    * **Cara Kerja:** Logistic Regression adalah algoritma klasifikasi linear yang menggunakan **fungsi logit** (juga dikenal sebagai fungsi sigmoid) untuk memodelkan probabilitas bahwa suatu sampel termasuk dalam kelas tertentu. Proses ini melibatkan dua langkah utama:
+        1.  **Transformasi Linear:** Pertama, model menghitung kombinasi linear dari fitur-fitur input dan bobotnya (koefisien). Ini dapat direpresentasikan sebagai:
+            $$z = \beta_0 + \beta_1x_1 + \beta_2x_2 + ... + \beta_nx_n$$
+            di mana:
+            * $z$ adalah skor linear (juga dikenal sebagai *logit*).
+            * $\beta_0$ adalah *intercept* (bias).
+            * $\beta_i$ adalah koefisien (bobot) untuk setiap fitur $x_i$.
+            * $x_i$ adalah nilai fitur input.
 
-      * **Parameter:** `n_estimators=100`, `random_state=42`
-      * **Digunakan untuk:** Mendeteksi kelas **Medium**.
-      * **Cara Kerja:** Sama seperti `base_model_low`, model ini memanfaatkan kekuatan *ensemble* dari banyak pohon keputusan untuk menghasilkan prediksi yang lebih robust dan akurat untuk kelas Medium.
+        2.  **Fungsi Sigmoid (Logit):** Skor linear $z$ kemudian dimasukkan ke dalam **fungsi sigmoid** untuk mengubahnya menjadi probabilitas $P(Y=1|X)$ antara 0 dan 1. Fungsi sigmoid didefinisikan sebagai:
+            $$P(Y=1|X) = \frac{1}{1 + e^{-z}}$$
+            di mana:
+            * $P(Y=1|X)$ adalah probabilitas bahwa output $Y$ adalah 1 (kelas positif, dalam hal ini `High`), diberikan fitur input $X$.
+            * $e$ adalah basis logaritma natural (sekitar 2.71828).
 
-  * `base_model_high` → **Logistic Regression**
-
-      * **Parameter:** `solver='lbfgs'`, `max_iter=1000`
-      * **Digunakan untuk:** Mendeteksi kelas **High**.
-      * **Cara Kerja:** Logistic Regression adalah algoritma klasifikasi linear yang menggunakan **fungsi logit** (juga dikenal sebagai fungsi sigmoid) untuk memodelkan probabilitas bahwa suatu sampel termasuk dalam kelas tertentu. Ini menghitung skor linear berdasarkan fitur input, lalu mengubah skor tersebut menjadi probabilitas antara 0 dan 1. Jika probabilitas melebihi batas tertentu (misalnya, 0.5), maka sampel diklasifikasikan ke dalam kelas positif (dalam kasus ini, kelas High).
+        Jika probabilitas yang dihitung melebihi ambang batas tertentu (misalnya, 0.5), maka sampel diklasifikasikan ke dalam kelas positif (kelas `High`). Sebaliknya, jika probabilitas di bawah ambang batas, sampel diklasifikasikan ke dalam kelas negatif.
 
 ### Strategi Ensemble:
 
 Output dari ketiga model (`base_model_low`, `base_model_medium`, `base_model_high`) dikumpulkan sebagai array biner. Setiap model menghasilkan prediksi biner (0 atau 1) untuk kelasnya masing-masing.
 
-  * Jika `base_model_low` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[1, 0, 0]` → **Low**
-  * Jika `base_model_medium` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 1, 0]` → **Medium**
-  * Jika `base_model_high` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 0, 1]` → **High**
+* Jika `base_model_low` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[1, 0, 0]` → **Low**
+* Jika `base_model_medium` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 1, 0]` → **Medium**
+* Jika `base_model_high` memprediksi `1` (dan model lain `0`), maka hasilnya adalah `[0, 0, 1]` → **High**
 
 Prediksi akhir dari sistem *ensemble* didasarkan pada posisi `1` pada array hasil dari masing-masing model. Jika ada konflik (misalnya, lebih dari satu model memprediksi `1`), maka dapat digunakan aturan prioritas atau probabilitas untuk resolusi, meskipun dalam kasus ini, diasumsikan hanya satu model yang akan menghasilkan `1` untuk output final.
 
