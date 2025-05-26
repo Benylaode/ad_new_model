@@ -1,7 +1,3 @@
-Tentu, saya akan sesuaikan laporan Anda dengan menambahkan langkah-langkah yang Anda sebutkan di bagian "Data Preparation" dan memastikan bagian "Evaluation" secara eksplisit menjawab setiap *goals* yang telah ditetapkan.
-
-Berikut adalah versi laporan yang telah diperbaiki:
-
 # 📘 LAPORAN PROYEK KLASIFIKASI PERFORMA IKLAN
 
 -----
@@ -231,4 +227,3 @@ Kemampuan model untuk memprediksi performa iklan (Low, Medium, High) secara akur
 
 **Rekomendasi:** Model dapat dikembangkan lebih lanjut di masa depan dengan mengeksplorasi algoritma yang lebih canggih seperti **XGBoost** atau **LightGBM**, serta melakukan **tuning parameter yang lebih mendalam** menggunakan teknik seperti *Grid Search* atau *Random Search* untuk menemukan konfigurasi model yang optimal.
 
------
