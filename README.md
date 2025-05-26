@@ -112,16 +112,12 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
       * Fitur `calculated_roi` memiliki outlier yang signifikan. Outlier ini ditangani dengan **winsorization** pada batas persentil ke-5 dan ke-95. Penanganan ini dilakukan untuk menghindari bias data yang bisa menyebabkan kesalahan prediksi karena nilai-nilai ekstrem.
 
-2.  **Penghapusan Data Duplikat:**
-
-      * Melakukan penghapusan dengan `df.drop_duplicates()`. Ini dilakukan agar data tidak bias dan condong kepada data yang banyak duplikatnya, memastikan setiap baris data merepresentasikan observasi unik.
-
-3.  **Konversi Tipe Data:**
+2.  **Konversi Tipe Data:**
 
       * Kolom `timestamp` diubah menjadi tipe data `datetime` dari yang sebelumnya `String`. Ini memudahkan ekstraksi informasi berbasis waktu jika diperlukan di masa depan.
 
 
-4.  **Encoding Kategorikal:**
+3.  **Encoding Kategorikal:**
 
       * Menggunakan **One-Hot Encoding** pada kolom-kolom kategorikal seperti `gender`, `device_type`, `content_type`, `location`, `age_group`, `ad_topic`, `ad_target_audience`, `engagement_level`, dan `previous_campaign_perf`. Ini mengubah variabel kategorikal menjadi format numerik yang dapat dipahami oleh model *machine learning*. dan sebelum itu dalam proses ini hanya beberapa data kategorikal yang relevan yang akan di ambil yakni : categorical_list = [
      "device_type",
@@ -134,21 +130,21 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
      "engagement_level",
      "Performance",
 ]'
-5.  **Drop Fitur yang Tidak Dibutuhkan:**
+4.  **Drop Fitur yang Tidak Dibutuhkan:**
 
       * Kolom `user_id` dihapus karena merupakan pengidentifikasi unik dan tidak memberikan kontribusi prediktif yang relevan untuk performa iklan secara umum.
 
-6.  **Pembagian Dataset untuk Setiap Model:**
+5.  **Pembagian Dataset untuk Setiap Model:**
 
       * Data dibagi berdasarkan kelas target (`performance`) menjadi tiga dataset berbeda. Ini dilakukan karena setiap model klasifikasi (untuk Low, Medium, dan High) akan dilatih secara spesifik untuk mengenali kelas targetnya masing-masing.
 
-7.  **Handling Imbalanced Data:**
+6.  **Handling Imbalanced Data:**
 
       * **Model Low:** Melakukan **undersampling** pada kelas `Medium` dan `High`. Ini mengurangi jumlah sampel dari kelas mayoritas agar seimbang dengan kelas `Low`.
       * **Model Medium:** Melakukan **oversampling** pada kelas `Medium` menggunakan **SMOTE (Synthetic Minority Over-sampling Technique)**. Ini menciptakan sampel sintetis untuk kelas minoritas (`Medium`) guna meningkatkan jumlahnya.
       * **Model High:** Melakukan **undersampling** pada kelas `Medium` dan `Low`. Ini bertujuan untuk menyeimbangkan kelas `High` dengan mengurangi sampel dari kelas lainnya.
 
-8.  **Pembagian Data Latih dan Uji:**
+7.  **Pembagian Data Latih dan Uji:**
 
       * Data dibagi menjadi set pelatihan (80%) dan set pengujian (20%) menggunakan `train_test_split` dengan strategi `stratify`. Ini memastikan distribusi kelas di set pelatihan dan pengujian tetap proporsional, yang penting untuk evaluasi model yang akurat.
 
@@ -247,7 +243,7 @@ Model yang dikembangkan dan dievaluasi ini berhasil menjawab setiap **problem st
               * **Mengoptimalkan strategi:** Mereka dapat mengidentifikasi elemen-elemen sukses (berdasarkan konten dan demografi) dari kampanye yang diprediksi berkinerja tinggi dan mereplikasinya.
               * **Intervensi Dini:** Model dapat mengidentifikasi kampanye yang berpotensi rendah, memungkinkan intervensi cepat untuk penyesuaian strategi.
 
-Secara keseluruhan, wawasan yang diperoleh dari model dan kemampuannya untuk memprediksi performa iklan dapat digunakan untuk **mengoptimalkan strategi kampanye digital marketing** dan **meningkatkan efisiensi biaya** bagi pengiklan.
+Secara keseluruhan, wawasan yang diperoleh dari model dan kemampuannya untuk memprediksi performa iklan dapat digunakan untuk **mengoptimalkan strategi kampanye digital marketing** dan **meningkatkan efisiensi biaya** bagi pengiklan. Sehingga bisa menjadi solusi periklanan yang baik
 
 -----
 
