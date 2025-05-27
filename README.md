@@ -144,7 +144,7 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 6.  **Handling Imbalanced Data:**
 
       * **Model Low:** Melakukan **undersampling** pada kelas `Medium` dan `High`. Ini mengurangi jumlah sampel dari kelas mayoritas agar seimbang dengan kelas `Low`.
-      * **Model Medium:** Melakukan **oversampling** pada kelas `Medium` menggunakan **SMOTE (Synthetic Minority Over-sampling Technique)**. Ini menciptakan sampel sintetis untuk kelas minoritas (`Medium`) guna meningkatkan jumlahnya.
+      * **Model Medium:** Melakukan **oversampling** pada kelas `Medium` menggunakan **Random Over Sampling (ROS)**. dengan cara menambahkan salinan acak dari contoh (data) dari kelas minoritas sampai jumlahnya seimbang dengan kelas mayoritas
       * **Model High:** Melakukan **undersampling** pada kelas `Medium` dan `Low`. Ini bertujuan untuk menyeimbangkan kelas `High` dengan mengurangi sampel dari kelas lainnya.
 
 7.  **Pembagian Data Latih dan Uji:**
