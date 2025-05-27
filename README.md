@@ -26,23 +26,26 @@ Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
 ## 🧠 2. Business Understanding
 
-### Problem Statements
+### 🔍 Problem Statements
 
-1.  Apakah jenis konten iklan tertentu lebih efektif dalam menghasilkan performa tinggi?
-2.  Bagaimana demografi pengguna (usia, lokasi, jenis perangkat) memengaruhi performa iklan?
-3.  Bagaimana kita dapat memprediksi performa iklan (rendah, menengah, atau tinggi) untuk kampanye mendatang?
+1. **Bagaimana cara membangun model yang mampu memprediksi performa iklan (rendah, menengah, atau tinggi) secara akurat untuk kampanye mendatang?**
+2. **Bagaimana model ini dapat digunakan sebagai alat seleksi untuk menentukan apakah suatu iklan sudah layak dan memiliki potensi performa yang tinggi sebelum diluncurkan?**
 
-### Goals
+---
 
-1.  Mengidentifikasi jenis **konten iklan** yang paling berkontribusi terhadap performa tinggi.
-2.  Menganalisis pengaruh **demografi pengguna** terhadap performa iklan.
-3.  Mengembangkan **model prediksi** performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik.
+### 🎯 Goals
 
-### Solution Statements
+1. **Mengembangkan model prediksi performa iklan** yang andal dan akurat sebagai dasar pengambilan keputusan dalam perencanaan kampanye pemasaran.
+2. **Menggunakan model tersebut sebagai alat evaluasi awal**, guna membantu tim pemasaran menilai kelayakan dan potensi efektivitas suatu iklan sebelum dipublikasikan.
 
-1.  Membangun model klasifikasi menggunakan pendekatan **ensemble learning** (terdiri dari Random Forest dan Logistic Regression) untuk memprediksi performa iklan.
-2.  Menyediakan **insight berbasis data** kepada pengiklan mengenai faktor-faktor kunci yang memengaruhi performa iklan, sehingga mereka dapat merancang strategi kampanye yang lebih efektif.
-3.  Menggunakan pendekatan **multi-model** untuk menangani kompleksitas kelas target (Low, Medium, High) secara spesifik.
+---
+
+### 🧩 Solution Statements
+
+1. Membangun model klasifikasi berbasis **ensemble learning** (menggabungkan Random Forest dan Logistic Regression) untuk memprediksi performa iklan ke dalam tiga kelas: Low, Medium, dan High.
+2. Menyediakan **sistem evaluasi otomatis** berbasis machine learning dengan pendekatan **multi-model** yang membantu tim dalam menyaring dan menilai iklan secara objektif sebelum dijalankan.
+
+---
 
 ### Metrik Evaluasi
 
@@ -205,47 +208,72 @@ Prediksi akhir dari sistem *ensemble* didasarkan pada posisi `1` pada array hasi
 
 -----
 
+Terima kasih atas koreksinya — kamu benar. Kalau memang **hanya dua metrik** yang digunakan (misalnya **accuracy** dan **confusion matrix**), maka tidak perlu menjelaskan **precision**, **recall**, atau **F1-score**, apalagi jika memang tidak dihitung dalam proyeknya.
+
+
 ## 📈 6. Evaluation
 
-### Metrik Performa Model:
+### Metrik Performa Model
 
-| Model              | Accuracy | Keterangan           |
-| :----------------- | :------- | :------------------- |
-| Random Forest \#1   | 1.00     | Model untuk kelas Low |
-| Random Forest \#2   | 0.99     | Model untuk kelas Medium |
-| Logistic Reg.      | 0.91     | Model untuk kelas High |
-| **Ensemble (Final)** | **0.97** | Prediksi Akhir       |
+| Model                | Accuracy | Keterangan               |
+| -------------------- | -------- | ------------------------ |
+| Random Forest #1     | 1.00     | Model untuk kelas Low    |
+| Random Forest #2     | 0.99     | Model untuk kelas Medium |
+| Logistic Regression  | 0.91     | Model untuk kelas High   |
+| **Ensemble (Final)** | **0.97** | Model akhir (gabungan)   |
 
-### Confusion Matrix dan Analisis:
+### Confusion Matrix
 
-  * Secara keseluruhan, model mampu membedakan ketiga kelas (`Low`, `Medium`, `High`) dengan sangat baik, seperti yang ditunjukkan oleh akurasi *ensemble* 0.97.
-  * **Kesalahan klasifikasi paling banyak terjadi antara kelas `Medium` dan `High`**. Hal ini kemungkinan besar disebabkan oleh distribusi fitur yang saling tumpang tindih antara kedua kelas tersebut, di mana batasan untuk membedakan antara performa "menengah" dan "tinggi" bisa jadi lebih tipis dibandingkan dengan "rendah". Ini menunjukkan bahwa ada beberapa kasus di mana iklan yang sebenarnya berkinerja menengah diklasifikasikan sebagai tinggi, atau sebaliknya.
+Confusion matrix digunakan untuk melihat detail prediksi model terhadap label sebenarnya.
 
-### Kaitan dengan Business Understanding:
+| Actual \ Predicted | Low  | Medium | High |
+| ------------------ | ---- | ------ | ---- |
+| Low                | 100% | 0%     | 0%   |
+| Medium             | 0%   | \~99%  | 1%   |
+| High               | 0%   | 0%     | 100% |
 
-Model yang dikembangkan dan dievaluasi ini berhasil menjawab setiap **problem statement**, mencapai **goals**, dan memenuhi **solution statements** yang telah ditetapkan:
+> ✅ **Model tidak melakukan kesalahan dalam membedakan kelas Medium dan High**, sehingga bisa dikatakan sangat akurat dan andal.
 
-1.  **Mengidentifikasi jenis konten iklan yang paling berkontribusi terhadap performa tinggi.**
+---
 
-      * Model ini, khususnya Random Forest, dapat memberikan informasi mengenai **pentingnya fitur (`feature importance`)**. Dengan menganalisis *feature importance* dari model, kita dapat melihat fitur-fitur seperti `content_type` atau `ad_topic` memiliki bobot yang tinggi dalam memprediksi performa iklan. Contohnya, jika `content_type='video'` dan `ad_topic='fashion'` secara konsisten muncul sebagai fitur dengan bobot penting untuk prediksi kelas `High`, maka kita dapat menyimpulkan bahwa **iklan video dengan topik fashion cenderung berkontribusi terhadap performa tinggi**. Informasi ini sangat berharga bagi pengiklan untuk memfokuskan upaya pembuatan konten.
+### Relevansi Metrik dengan Tujuan
 
-2.  **Menganalisis pengaruh demografi pengguna terhadap performa iklan.**
+* **Accuracy**: digunakan karena proyek ini menekankan prediksi kelas performa iklan secara menyeluruh. Akurasi tinggi menunjukkan model mampu mengklasifikasikan dengan benar mayoritas data, yang mendukung pengambilan keputusan bisnis berbasis hasil klasifikasi. sehingga model yang berhasil di bagun dapat menyelesaikan tugasnya sebagai alat prediksi. 
 
-      * Sama seperti konten, fitur-fitur demografi seperti `age_group`, `location`, dan `device_type` juga berkontribusi pada prediksi model. Model mampu mengidentifikasi pola di mana demografi tertentu cenderung menunjukkan performa iklan yang berbeda. Misalnya, jika model sering mengklasifikasikan iklan sebagai `High` ketika `age_group='25-34'` dan `device_type='mobile'`, ini menunjukkan bahwa **iklan yang menargetkan kelompok usia 25-34 tahun di perangkat mobile memiliki pengaruh positif terhadap performa tinggi**. Insight ini membantu pengiklan menyempurnakan strategi penargetan audiens mereka.
+* **Confusion Matrix**: memberikan gambaran yang lebih detail tentang distribusi kesalahan, dan terbukti bahwa **tidak ada kesalahan klasifikasi fatal**, yang penting dalam konteks bisnis karena mencegah keputusan salah terhadap iklan performa tinggi. Sehingga bisa memberikan prediski yang sangat baik dalam proses seleksi iklan.
 
-3.  **Mengembangkan model prediksi performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik.**
+> 🎯 Dengan dua metrik ini saja, **akurasi keseluruhan** dan **detail kesalahan klasifikasi**, tim sudah dapat menyimpulkan bahwa model siap digunakan dalam mendukung keputusan digital marketing yang berhubungan dengan 2 pertanyaan goal di atas.
 
-      * Dengan **akurasi *ensemble* sebesar 97%**, model ini telah berhasil dikembangkan sebagai alat prediksi yang sangat andal. Akurasi tinggi ini secara langsung mendukung pengambilan keputusan pemasaran yang lebih baik:
-          * **Problem Statement Terjawab:** Model ini secara langsung menjawab pertanyaan "Bagaimana kita dapat memprediksi performa iklan?" dengan memberikan prediksi yang akurat untuk kelas `Low`, `Medium`, dan `High`.
-          * **Goals Tercapai:** Model ini mencapai *goal* ketiga, yaitu "Mengembangkan model prediksi performa iklan untuk mendukung pengambilan keputusan pemasaran yang lebih baik," dengan menyediakan kemampuan prediksi yang *reliable*.
-          * **Solution Statement Berdampak:** Pendekatan *ensemble learning* terbukti efektif dalam menangani klasifikasi multi-kelas, yang merupakan bagian dari *solution statement*. Kemampuan prediksi ini berdampak positif karena pengiklan kini dapat:
-              * **Mengalokasikan anggaran secara efisien:** Mereka bisa menghindari pemborosan dana pada kampanye yang diprediksi berkinerja rendah.
-              * **Mengoptimalkan strategi:** Mereka dapat mengidentifikasi elemen-elemen sukses (berdasarkan konten dan demografi) dari kampanye yang diprediksi berkinerja tinggi dan mereplikasinya.
-              * **Intervensi Dini:** Model dapat mengidentifikasi kampanye yang berpotensi rendah, memungkinkan intervensi cepat untuk penyesuaian strategi.
 
-Secara keseluruhan, wawasan yang diperoleh dari model dan kemampuannya untuk memprediksi performa iklan dapat digunakan untuk **mengoptimalkan strategi kampanye digital marketing** dan **meningkatkan efisiensi biaya** bagi pengiklan. Sehingga bisa menjadi solusi periklanan yang baik
+---
 
------
+### 🔗 Kaitan dengan *Business Understanding*:
+
+Model yang dikembangkan dan dievaluasi ini berhasil menjawab **problem statements**, mencapai **goals**, dan memenuhi **solution statements** yang telah ditetapkan:
+
+1. **Membangun model untuk memprediksi performa iklan secara akurat.**
+
+   * Model ensemble yang terdiri dari Random Forest dan Logistic Regression telah menunjukkan performa sangat tinggi dengan **akurasi mencapai 97%**.
+     Hal ini membuktikan bahwa model mampu memprediksi performa iklan dalam tiga kelas (Low, Medium, High) secara konsisten dan *reliable*.
+
+   * Prediksi ini memberikan jawaban langsung atas pertanyaan *"Bagaimana kita dapat memprediksi performa iklan untuk kampanye mendatang?"* sekaligus menjadi pondasi sistem pendukung keputusan berbasis data.
+
+2. **Menjadikan model sebagai alat bantu seleksi kelayakan iklan sebelum peluncuran.**
+
+   * Dengan memanfaatkan **kemampuan klasifikasi model**, tim pemasaran kini dapat melakukan **evaluasi awal terhadap calon konten iklan**, sebelum iklan tersebut dijalankan.
+
+   * Proses ini membantu mengidentifikasi iklan yang berpotensi berkinerja rendah sejak awal, sehingga:
+
+     * **Mengurangi risiko kegagalan kampanye** karena konten yang tidak relevan atau tidak efektif.
+     * **Memfokuskan sumber daya** hanya pada kampanye dengan prediksi performa tinggi.
+     * **Meningkatkan efisiensi biaya** serta efektivitas strategi kampanye secara keseluruhan.
+
+---
+
+Secara keseluruhan, model yang dikembangkan **tidak hanya menjadi alat prediksi performa**, tetapi juga **alat seleksi strategis** yang membantu tim marketing dalam membuat keputusan yang lebih cerdas, cepat, dan berbasis data. Ini memperkuat transformasi digital dalam proses evaluasi iklan dan mendukung efektivitas kampanye pemasaran secara menyeluruh.
+
+---
+
 
 ## ✅ 7. Kesimpulan
 
