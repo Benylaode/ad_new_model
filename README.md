@@ -12,9 +12,8 @@ Dalam era digital yang sangat kompetitif, pengiklan terus berupaya keras untuk m
 
 Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
-  * **Pemborosan anggaran iklan:** Dana yang dialokasikan tidak menghasilkan dampak yang optimal.
-  * **Kampanye yang tidak tepat sasaran:** Iklan tidak menjangkau audiens yang relevan, sehingga mengurangi potensi konversi.
-  * **Format dan konten yang tidak sesuai dengan preferensi pengguna:** Pengguna kurang tertarik atau berinteraksi dengan iklan.
+  * **Pemborosan anggaran iklan:** Dana yang dialokasikan tidak menghasilkan dampak yang optimal sehingga perlu penyeleskian startegi iklana .
+  * **Otomation yang mempercepat waktu proses seleksi :** dengan banyaknya opsi yang ada membuat kita kehabisan waktu hanya untuk mklasifikasi iklan dengan prediksi yang baik.
 
 ### Riset Terkait:
 
