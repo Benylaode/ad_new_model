@@ -110,49 +110,77 @@ Ketidaktahuan terhadap faktor penentu efektivitas iklan dapat mengakibatkan:
 
 Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
-1. **Deteksi dan Penanganan Outlier:**
+---
 
-      * Fitur `calculated_roi` memiliki outlier yang signifikan. Outlier ini ditangani dengan **winsorization** pada batas persentil ke-5 dan ke-95. Penanganan ini dilakukan untuk menghindari bias data yang bisa menyebabkan kesalahan prediksi karena nilai-nilai ekstrem.
+### 1. **Deteksi dan Penanganan Outlier**
 
-2.  **Konversi Tipe Data:**
+* Fitur `calculated_ROI` mengandung outlier yang signifikan.
+* Penanganan dilakukan dalam dua tahap:
 
-      * Kolom `timestamp` diubah menjadi tipe data `datetime` dari yang sebelumnya `String`. Ini memudahkan ekstraksi informasi berbasis waktu jika diperlukan di masa depan.
-
-
-3.  **Encoding Kategorikal:**
-
-      * Menggunakan **One-Hot Encoding** pada kolom-kolom kategorikal seperti `gender`, `device_type`, `content_type`, `location`, `age_group`, `ad_topic`, `ad_target_audience`, `engagement_level`, dan `previous_campaign_perf`. Ini mengubah variabel kategorikal menjadi format numerik yang dapat dipahami oleh model *machine learning*. dan sebelum itu dalam proses ini hanya beberapa data kategorikal yang relevan yang akan di ambil yakni : categorical_list = [
-     "device_type",
-     "location",
-     "age_group",
-     "gender",
-     "content_type",
-     "ad_topic",
-     "ad_target_audience",
-     "engagement_level",
-     "Performance",
-]'
-4.  **Drop Fitur yang Tidak Dibutuhkan:**
-
-      * Kolom `user_id` dihapus karena merupakan pengidentifikasi unik dan tidak memberikan kontribusi prediktif yang relevan untuk performa iklan secara umum.
-
-5.  **Pembagian Dataset untuk Setiap Model:**
-
-      * Data dibagi berdasarkan kelas target (`performance`) menjadi tiga dataset berbeda. Ini dilakukan karena setiap model klasifikasi (untuk Low, Medium, dan High) akan dilatih secara spesifik untuk mengenali kelas targetnya masing-masing.
-
-6.  **Handling Imbalanced Data:**
-
-      * **Model Low:** Melakukan **undersampling** pada kelas `Medium` dan `High`. Ini mengurangi jumlah sampel dari kelas mayoritas agar seimbang dengan kelas `Low`.
-      * **Model Medium:** Melakukan **oversampling** pada kelas `Medium` menggunakan **Random Over Sampling (ROS)**. dengan cara menambahkan salinan acak dari contoh (data) dari kelas minoritas sampai jumlahnya seimbang dengan kelas mayoritas
-      * **Model High:** Melakukan **undersampling** pada kelas `Medium` dan `Low`. Ini bertujuan untuk menyeimbangkan kelas `High` dengan mengurangi sampel dari kelas lainnya.
-
-7.  **Pembagian Data Latih dan Uji:**
-
-      * Data dibagi menjadi set pelatihan (80%) dan set pengujian (20%) menggunakan `train_test_split` dengan strategi `stratify`. Ini memastikan distribusi kelas di set pelatihan dan pengujian tetap proporsional, yang penting untuk evaluasi model yang akurat.
-
-Tentu, berikut adalah potongan bagian "Modeling" dari laporan Anda, termasuk penjelasan matematis untuk Random Forest dan Logistic Regression:
+  * **IQR Filtering:** Menghapus nilai yang berada di luar batas bawah dan atas berdasarkan rumus:
+    `Q1 - 1.5 * IQR` dan `Q3 + 1.5 * IQR`.
+  * **Winsorization:** Setelah filtering, nilai-nilai `calculated_ROI` dibatasi menggunakan `winsorize` pada batas persentil ke-10 dan ke-90 untuk mengurangi pengaruh nilai ekstrem tanpa membuang data.
 
 ---
+
+### 2. **Konversi Tipe Data**
+
+* Kolom `timestamp` diubah menjadi format `datetime` menggunakan `pd.to_datetime`.
+  Ini dilakukan agar memudahkan pemrosesan data berbasis waktu di tahap selanjutnya.
+
+---
+
+### 3. **Encoding Kategorikal**
+
+* Semua nilai dalam kolom kategorikal dikonversi ke huruf kecil (`lowercase`).
+* Untuk nilai yang berisi beberapa kategori dalam satu sel, dilakukan pemisahan menggunakan berbagai pemisah seperti `|`, `/`, `,`, `&`, `;`, dan `\`.
+* Label pada kolom target `Performance` diproses menggunakan fungsi khusus agar dapat ditangani sebagai label multi-kelas (list of integers).
+* **One-Hot Encoding** diterapkan untuk seluruh kolom dalam `categorical_list`, termasuk `Performance`.
+  Setiap label unik dibuat menjadi kolom biner baru di `encoded_df`.
+
+---
+
+### 4. **Drop Fitur yang Tidak Dibutuhkan**
+
+* Kolom `user_id` dihapus karena merupakan pengenal unik dan tidak berkontribusi pada prediksi performa.
+
+---
+
+### 5. **Pembagian Dataset Awal**
+
+* Data diacak menggunakan `sample(frac=1, random_state=42)` agar distribusi data acak.
+* Data dibagi menjadi:
+
+  * `df_train`: 80% data awal.
+  * `df_test`: 20% data akhir.
+* Pembagian ini **menggunakan slicing berdasarkan indeks**, **bukan** `train_test_split`, dan **tidak menggunakan stratifikasi label**.
+
+---
+
+### 6. **Pembentukan Dataset untuk Model Klasifikasi Biner**
+
+* Dari `df_train`, dibuat tiga versi dataset biner:
+
+  * `encoded_df_low`: Hanya mempertahankan kolom `Performance__low`.
+  * `encoded_df_medium`: Hanya mempertahankan kolom `Performance__medium`.
+  * `encoded_df_high`: Hanya mempertahankan kolom `Performance__high`.
+* Untuk setiap versi model biner ini, **pembagian data latih dan uji dilakukan kembali menggunakan `train_test_split`**, meskipun tanpa `stratify`.
+  Hal ini dilakukan agar data masing-masing model biner terpisah secara acak untuk pelatihan dan pengujian.
+
+---
+
+### 7. **Penanganan Missing Values**
+
+* Kolom-kolom numerik diisi nilai kosongnya (`NaN`) dengan `0`.
+
+---
+
+### 8. **Informasi Tambahan**
+
+* Jumlah data duplikat diperiksa menggunakan `df.duplicated().sum()`.
+* Nilai unik dari setiap kolom kategorikal ditampilkan.
+* Jumlah nilai kosong (`null/NaN`) dihitung untuk setiap kolom.
+
 
 ## 🤖 5. Modeling
 
@@ -217,21 +245,38 @@ Terima kasih atas koreksinya — kamu benar. Kalau memang **hanya dua metrik** y
 | Model                | Accuracy | Keterangan               |
 | -------------------- | -------- | ------------------------ |
 | Random Forest #1     | 1.00     | Model untuk kelas Low    |
-| Random Forest #2     | 0.99     | Model untuk kelas Medium |
+| Random Forest #2     | 1.00     | Model untuk kelas Medium |
 | Logistic Regression  | 0.91     | Model untuk kelas High   |
 | **Ensemble (Final)** | **0.97** | Model akhir (gabungan)   |
 
 ### Confusion Matrix
 
-Confusion matrix digunakan untuk melihat detail prediksi model terhadap label sebenarnya.
+Berdasarkan **confusion matrix** pada gambar di notebook, berikut adalah **tabel persentase prediksi aktual vs prediksi model** yang akurat:
 
-| Actual \ Predicted | Low  | Medium | High |
-| ------------------ | ---- | ------ | ---- |
-| Low                | 100% | 0%     | 0%   |
-| Medium             | 0%   | \~99%  | 1%   |
-| High               | 0%   | 0%     | 100% |
+| Actual \ Predicted | Low    | Medium | High  |
+| ------------------ | ------ | ------ | ----- |
+| **Low**            | 100.0% | 0.0%   | 0.0%  |
+| **Medium**         | 0.0%   | 98.4%  | 1.6%  |
+| **High**           | 9.6%   | 0.0%   | 90.4% |
 
-> ✅ **Model tidak melakukan kesalahan dalam membedakan kelas Medium dan High**, sehingga bisa dikatakan sangat akurat dan andal.
+### Penjelasan:
+
+* **Baris Low (Label 0):**
+
+  * 67 dari 67 prediksi benar → 100.0%
+
+* **Baris Medium (Label 1):**
+
+  * 62 dari 63 prediksi benar → 62/63 ≈ **98.4%** Medium
+  * 1 dari 63 salah diprediksi sebagai High → 1/63 ≈ **1.6%**
+
+* **Baris High (Label 2):**
+
+  * 47 dari 52 prediksi benar → 47/52 ≈ **90.4%** High
+  * 5 dari 52 salah diprediksi sebagai Low → 5/52 ≈ **9.6%**
+
+
+> ✅ **Model tidak melakukan kesalahan yang fatal dalam membedakan kelas Medium dan High**, sehingga bisa dikatakan sangat akurat dan andal.
 
 ---
 
