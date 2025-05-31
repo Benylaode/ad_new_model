@@ -140,15 +140,15 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 ---
 
-### 4. **Drop Fitur yang Tidak Dibutuhkan**
+### 4. **Penanganan Missing Values**
 * Kolom-kolom numerik diisi nilai kosongnya (`NaN`) dengan `0`.
 
 ---
 
-### 5. **Penanganan Missing Values**
+### 5. **Drop Fitur yang Tidak Dibutuhkan**
 
 * Kolom `user_id` dihapus karena merupakan pengenal unik dan tidak berkontribusi pada prediksi performa.
-* 
+  
 ---
 
 ### 6. **Pembagian Dataset Awal**
@@ -174,7 +174,7 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 ---
 
-### 8. **Penyesuain imbalance dataset untuk model **
+### 8. **Penyesuain imbalance dataset untuk model klasifikasi biner**
 
 * Dari `df_train`, dibuat tiga versi dataset biner yang menghasilkan data imbalance yang kemudia di sesuikan dengan metode resampling (RandomUnderSampler dan RandomOverSampler) dari library imbalanced-learn (imblearn):
   * `encoded_df_low`: menggunakan RandomUnderSampler`.
