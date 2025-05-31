@@ -141,12 +141,17 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 ---
 
 ### 4. **Drop Fitur yang Tidak Dibutuhkan**
-
-* Kolom `user_id` dihapus karena merupakan pengenal unik dan tidak berkontribusi pada prediksi performa.
+* Kolom-kolom numerik diisi nilai kosongnya (`NaN`) dengan `0`.
 
 ---
 
-### 5. **Pembagian Dataset Awal**
+### 5. **Penanganan Missing Values**
+
+* Kolom `user_id` dihapus karena merupakan pengenal unik dan tidak berkontribusi pada prediksi performa.
+* 
+---
+
+### 6. **Pembagian Dataset Awal**
 
 * Data diacak menggunakan `sample(frac=1, random_state=42)` agar distribusi data acak.
 * Data dibagi menjadi:
@@ -157,7 +162,7 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 ---
 
-### 6. **Pembentukan Dataset untuk Model Klasifikasi Biner**
+### 7. **Pembentukan Dataset untuk Model Klasifikasi Biner**
 
 * Dari `df_train`, dibuat tiga versi dataset biner:
 
@@ -169,13 +174,18 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
 
 ---
 
-### 7. **Penanganan Missing Values**
+### 8. **Penyesuain imbalance dataset untuk model **
 
-* Kolom-kolom numerik diisi nilai kosongnya (`NaN`) dengan `0`.
+* Dari `df_train`, dibuat tiga versi dataset biner yang menghasilkan data imbalance yang kemudia di sesuikan dengan metode resampling (RandomUnderSampler dan RandomOverSampler) dari library imbalanced-learn (imblearn):
+  * `encoded_df_low`: menggunakan RandomUnderSampler`.
+  * `encoded_df_medium`: menggunakan RandomOverSampler`.
+  * `encoded_df_high`: menggunakan RandomUnderSampler`.
+*  secara sederhana RandomUnderSampler adalah teknik resampling yang menghapus data secara acak dari kelas mayoritas agar distribusi antara kelas mayoritas dan minoritas menjadi seimbang dan RandomOverSampler adalah teknik resampling yang menggandakan data secara acak dari kelas minoritas agar jumlahnya seimbang dengan kelas mayoritas.n.
 
 ---
+---
 
-### 8. **Informasi Tambahan**
+### 9. **Informasi Tambahan**
 
 * Jumlah data duplikat diperiksa menggunakan `df.duplicated().sum()`.
 * Nilai unik dari setiap kolom kategorikal ditampilkan.
