@@ -169,8 +169,6 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
   * `encoded_df_low`: Hanya mempertahankan kolom `Performance__low`.
   * `encoded_df_medium`: Hanya mempertahankan kolom `Performance__medium`.
   * `encoded_df_high`: Hanya mempertahankan kolom `Performance__high`.
-* Untuk setiap versi model biner ini, **pembagian data latih dan uji dilakukan kembali menggunakan `train_test_split`**, meskipun tanpa `stratify`.
-  Hal ini dilakukan agar data masing-masing model biner terpisah secara acak untuk pelatihan dan pengujian.
 
 ---
 
@@ -182,10 +180,16 @@ Langkah-langkah yang dilakukan untuk mempersiapkan data:
   * `encoded_df_high`: menggunakan RandomUnderSampler`.
 *  secara sederhana RandomUnderSampler adalah teknik resampling yang menghapus data secara acak dari kelas mayoritas agar distribusi antara kelas mayoritas dan minoritas menjadi seimbang dan RandomOverSampler adalah teknik resampling yang menggandakan data secara acak dari kelas minoritas agar jumlahnya seimbang dengan kelas mayoritas.n.
 
----
+
 ---
 
-### 9. **Informasi Tambahan**
+### 9. **Melakukan Split Pada semua data biner**
+
+* Untuk setiap versi model biner , **pembagian data latih dan uji dilakukan  menggunakan `train_test_split`**, meskipun tanpa `stratify`.
+  Hal ini dilakukan agar data masing-masing model biner terpisah secara acak untuk pelatihan dan pengujian. Sehingga setiap model melakukan pelatihan dengan data yang sudah displit 
+---
+
+### 10. **Informasi Tambahan**
 
 * Jumlah data duplikat diperiksa menggunakan `df.duplicated().sum()`.
 * Nilai unik dari setiap kolom kategorikal ditampilkan.
