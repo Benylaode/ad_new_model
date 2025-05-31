@@ -333,8 +333,6 @@ Secara keseluruhan, model yang dikembangkan **tidak hanya menjadi alat prediksi 
 
 Model *ensemble* yang kami kembangkan, yang terdiri dari tiga model spesifik per kelas (`Low`, `Medium`, `High`), memberikan hasil akurasi yang sangat tinggi (97%). Pendekatan ini terbukti efektif dalam memprediksi performa iklan.
 
-Strategi pembagian data per kelas dan penanganan *imbalance data* yang disesuaikan (baik *undersampling* maupun *oversampling*) secara signifikan membantu setiap model untuk fokus pada distribusi kelas masing-masing. Ini memungkinkan model untuk mempelajari pola yang lebih spesifik dan menghasilkan prediksi yang lebih akurat untuk setiap kategori performa.
-
 Kemampuan model untuk memprediksi performa iklan (Low, Medium, High) secara akurat dapat digunakan sebagai alat yang sangat berharga untuk **mendukung keputusan strategis dalam digital marketing**. Pengiklan dapat memanfaatkan prediksi ini untuk mengidentifikasi potensi kampanye yang berkinerja rendah, mengoptimalkan elemen kampanye yang berkinerja tinggi, dan pada akhirnya, meningkatkan ROI (Return on Investment) secara keseluruhan.
 
 **Rekomendasi:** Model dapat dikembangkan lebih lanjut di masa depan dengan mengeksplorasi algoritma yang lebih canggih seperti **XGBoost** atau **LightGBM**, serta melakukan **tuning parameter yang lebih mendalam** menggunakan teknik seperti *Grid Search* atau *Random Search* untuk menemukan konfigurasi model yang optimal.
